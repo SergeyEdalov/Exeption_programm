@@ -8,13 +8,17 @@ public class Task_4 {
     // сообщение, что пустые строки вводить нельзя.
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        // String string = null;
-        try {
-            String string = scanner.next();
-        } catch (NullPointerException e) {
-            System.out.println("Пустые строки не вводить");
-        }
+        System.out.println("String = " + inputString());
+    }
 
+    public static String inputString() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите фразу: ");
+        String string = scanner.nextLine();
+        string = string.trim();
+        if (string.isEmpty()) {
+            throw new IllegalArgumentException("Пустые строки не вводить");
+        }
+        return string;
     }
 }

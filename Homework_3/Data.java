@@ -3,9 +3,7 @@ package Homeworks.Homework_3;
 import com.sun.jdi.Value;
 
 import java.security.Key;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Data implements InputDataToFile, ConverterData {
 //    Напишите приложение, которое будет запрашивать у пользователя следующие данные в произвольном порядке,
@@ -36,14 +34,25 @@ public class Data implements InputDataToFile, ConverterData {
         if (data.isEmpty()) {
             throw new ExceptionNumber();
         }
-        String [] dataArray = data.split(" ");
+//        String[] dataArray = data.split(" ");
+        List<String> dataArrayList = new ArrayList<>(Arrays.asList(data.split(" ")));
         Map<String, String> dataMap = new HashMap<>();
-        for (int i = 0; i < dataArray.length; i++) {
-            if (dataArray[i].contains(".")) {
-                dataMap.put("birthday", dataArray[i]);
-            }
-            if ((dataArray[i].contains("f") || dataArray[i].contains("m")) && dataArray[i].length() == 1) {
-                dataMap.put("sex", dataArray[i]);
+        dataMap.put("surname", "1");
+        dataMap.put("name", "1");
+        dataMap.put("fatherName", "1");
+        dataMap.put("birthday", "1");
+        dataMap.put("phoneNumber", "1");
+        dataMap.put("sex", "1");
+        while (dataArrayList.size() != 0) {
+            for (int i = 0; i < dataArrayList.size(); i++) {
+                if (dataArrayList.get(i).contains(".")) {
+                    dataMap.put("birthday", dataArrayList.get(i));
+                    dataArrayList.remove(dataArrayList.get(i));
+                }
+                if ((dataArrayList.get(i).contains("f") || dataArrayList.get(i).contains("m")) && dataArrayList.get(i).length() == 1) {
+                    dataMap.put("sex", dataArrayList.get(i));
+                    dataArrayList.remove(dataArrayList.get(i));
+                }
             }
         }
     }

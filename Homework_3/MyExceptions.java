@@ -1,4 +1,4 @@
-package Homeworks.Homework_3;
+
 
 public abstract class MyExceptions extends Exception {
 

@@ -1,4 +1,4 @@
-package Homeworks.Homework_3;
+
 
 public class ExceptionNumber extends MyExceptions{
     public ExceptionNumber() {

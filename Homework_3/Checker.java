@@ -1,10 +1,9 @@
 
-
 import java.util.Date;
 import java.util.Map;
 
 public abstract class Checker implements Check {
-Date date;
+    Date date;
     String data;
 
     public Checker(Date date, String data) {
@@ -16,5 +15,5 @@ Date date;
     public abstract void checkByNumber(String data) throws ExceptionNumber;
 
     @Override
-    public abstract void checkByFormat(Map<String, String> dataMap);
+    public abstract void checkByFormat(Map<String, String> dataMap) throws ExceptionFormat;
 }

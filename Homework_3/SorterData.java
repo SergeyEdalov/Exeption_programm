@@ -1,5 +1,5 @@
-
+import java.util.Map;
 
 public interface SorterData {
-    void sortData(String data) throws ExceptionNumber;
+    Map<String, String> sortData(String data);
 }

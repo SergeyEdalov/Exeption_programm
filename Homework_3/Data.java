@@ -22,6 +22,10 @@ public class Data implements InputDataToFile, SorterData {
         scanner.close();
     }
 
+    public String getData() {
+        return dataHuman;
+    }
+
     @Override
     public String toString() {
         return "InputData{" +
@@ -30,7 +34,7 @@ public class Data implements InputDataToFile, SorterData {
     }
 
     @Override
-    public void sortData(String data) {
+    public Map<String, String> sortData(String data) {
         List<String> dataArrayList = new ArrayList<>(Arrays.asList(data.split(" ")));
         Map<String, String> dataMap = new HashMap<>();
         dataMap.put("surname", "1");
@@ -56,16 +60,18 @@ public class Data implements InputDataToFile, SorterData {
                 dataMap.put("fatherName", dataArrayList.get(i + 2));
             }
         }
+        return dataMap;
     }
 
     @Override
-    public void inputDataToFile(String filePath, Map<String, String> map) {
+    public void inputDataToFile(String filePath, Map<String, String> map) throws IOException {
         FileWriter writer = new FileWriter(filePath);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             writer.write(entry.toString());
             writer.write("\n");
             writer.flush();
         }
+        writer.close();
 
     }
 

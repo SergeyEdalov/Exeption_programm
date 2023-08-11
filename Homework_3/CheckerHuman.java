@@ -17,7 +17,17 @@ public class CheckerHuman extends Checker {
     }
 
     @Override
-    public void checkByFormat(Map<String, String> dataMap) {
-
+    public void checkByFormat(Map<String, String> dataMap) throws ExceptionFormat {
+        try {
+            Integer.parseInt(dataMap.get("phoneNumber"));
+            dataMap.get("sex").matches("^[f F m M]*$");
+            dataMap.get("birthday").matches(".");
+            dataMap.get("surname").matches("^[a-zA-Z]*$");
+            dataMap.get("name").matches("^[a-zA-Z]*$");
+            dataMap.get("fatherName").matches("^[a-zA-Z]*$");
+        } catch (NumberFormatException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
     }
 }

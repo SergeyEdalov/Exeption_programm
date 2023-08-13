@@ -1,19 +1,10 @@
+package Homeworks.Homework_3;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 public class Data implements InputDataToFile, SorterData {
-    // Напишите приложение, которое будет запрашивать у пользователя следующие
-    // данные в произвольном порядке,
-    // * разделенные пробелом (данные вводятся одной строкой без запятых):
-    // * Фамилия Имя Отчество, дата рождения, номер телефона, пол
-    // * Форматы данных:
-    // * фамилия, имя, отчество - строки
-    // * дата рождения - строка формата dd.mm.yyyy
-    // * номер телефона - целое беззнаковое число без форматирования
-    // * пол - символ латиницей f или m.
-
     String dataHuman;
 
     public Data() {
@@ -26,53 +17,62 @@ public class Data implements InputDataToFile, SorterData {
         return dataHuman;
     }
 
-    @Override
-    public String toString() {
-        return "InputData{" +
-                "dataHuman='" + dataHuman + '\'' +
-                '}';
-    }
 
     @Override
     public Map<String, String> sortData(String data) {
         List<String> dataArrayList = new ArrayList<>(Arrays.asList(data.split(" ")));
-        Map<String, String> dataMap = new HashMap<>();
-        dataMap.put("surname", "1");
-        dataMap.put("name", "1");
-        dataMap.put("fatherName", "1");
-        dataMap.put("birthday", "1");
-        dataMap.put("phoneNumber", "1");
-        dataMap.put("sex", "1");
+        Map<String, String> dataMap = new LinkedHashMap<>();
+        dataMap.put("surname", "-1");
+        dataMap.put("name", "-1");
+        dataMap.put("fatherName", "-1");
+        dataMap.put("birthday", "-1");
+        dataMap.put("phoneNumber", "-1");
+        dataMap.put("sex", "-1");
         for (int i = 0; i < dataArrayList.size(); i++) {
-            if (dataArrayList.get(i).contains(".")) {
+            if (dataArrayList.get(i).matches("0?[1-9]|[12][0-9]|3[01].(0?[1-9]|1[012]).((19|20))\\d")) {
                 dataMap.put("birthday", dataArrayList.get(i));
-            }
-            if ((dataArrayList.get(i).contains("f") || dataArrayList.get(i).contains("m"))
-                    && dataArrayList.get(i).length() == 1) {
-                dataMap.put("sex", dataArrayList.get(i));
-            }
-            if (dataArrayList.get(i).matches("^-?\\d+$")) {
+                dataArrayList.remove(dataArrayList.get(i));
+                i--;
+            } else if (dataArrayList.get(i).matches("^\\d+$")) {
                 dataMap.put("phoneNumber", dataArrayList.get(i));
+                dataArrayList.remove(dataArrayList.get(i));
+                i--;
+            } else if (dataArrayList.get(i).equals("f") || dataArrayList.get(i).equals("m")) {
+                dataMap.put("sex", dataArrayList.get(i));
+                dataArrayList.remove(dataArrayList.get(i));
+                i--;
+            } else {
+                dataArrayList.add(dataArrayList.get(i));
+                dataArrayList.remove(dataArrayList.get(i));
             }
-            if (dataArrayList.get(i).matches("^[a-zA-Z]*$")) {
-                dataMap.put("surname", dataArrayList.get(i));
-                dataMap.put("name", dataArrayList.get(i + 1));
-                dataMap.put("fatherName", dataArrayList.get(i + 2));
-            }
+        }
+        int i = 0;
+        if (dataArrayList.get(i).matches("^[a-zA-Z]*$") && dataArrayList.get(i).length() > 1) {
+            dataMap.put("surname", dataArrayList.get(i));
+            i++;
+        }
+        if (dataArrayList.get(i).matches("^[a-zA-Z]*$") && dataArrayList.get(i).length() > 1) {
+            dataMap.put("name", dataArrayList.get(i));
+            i++;
+        }
+        if (dataArrayList.get(i).matches("^[a-zA-Z]*$") && dataArrayList.get(i).length() > 1) {
+            dataMap.put("fatherName", dataArrayList.get(i));
         }
         return dataMap;
     }
 
     @Override
     public void inputDataToFile(String filePath, Map<String, String> map) throws IOException {
-        FileWriter writer = new FileWriter(filePath);
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            writer.write(entry.toString());
+        try (FileWriter writer = new FileWriter(filePath + map.get("surname") + ".txt", true)) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                writer.append(entry.toString()).append(" ");
+                writer.flush();
+            }
             writer.write("\n");
-            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException(e);
         }
-        writer.close();
-
     }
-
 }
+

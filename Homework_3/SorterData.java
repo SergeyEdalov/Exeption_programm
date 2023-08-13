@@ -1,3 +1,5 @@
+package Homeworks.Homework_3;
+
 import java.util.Map;
 
 public interface SorterData {

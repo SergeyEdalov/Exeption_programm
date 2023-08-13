@@ -1,8 +1,10 @@
+package Homeworks.Homework_3;
+
 import java.util.Map;
 
 public interface Check {
 
-    void checkByNumber(String data) throws ExceptionNumber;
+    void checkByNumber(String data);
 
-    void checkByFormat(Map<String, String> dataMap) throws ExceptionFormat;
+    void checkByFormat(Map<String, String> dataMap);
 }

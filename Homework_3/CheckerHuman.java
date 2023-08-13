@@ -1,33 +1,27 @@
+package Homeworks.Homework_3;
 
-import java.util.Date;
 import java.util.Map;
 
 public class CheckerHuman extends Checker {
 
-    public CheckerHuman(Date date, String data) {
-        super(date, data);
+    public CheckerHuman(String data) {
+        super(data);
     }
 
     @Override
-    public void checkByNumber(String data) throws ExceptionNumber {
+    public void checkByNumber(String data) {
         String[] arrayData = data.split(" ");
         if (arrayData.length != 6) {
-            throw new ExceptionNumber();
+            throw new ExceptionNumber(arrayData.length);
         }
     }
 
     @Override
-    public void checkByFormat(Map<String, String> dataMap) throws ExceptionFormat {
-        try {
-            Integer.parseInt(dataMap.get("phoneNumber"));
-            dataMap.get("sex").matches("^[f F m M]*$");
-            dataMap.get("birthday").matches(".");
-            dataMap.get("surname").matches("^[a-zA-Z]*$");
-            dataMap.get("name").matches("^[a-zA-Z]*$");
-            dataMap.get("fatherName").matches("^[a-zA-Z]*$");
-        } catch (NumberFormatException e) {
-            e.getMessage();
-            e.printStackTrace();
+    public void checkByFormat(Map<String, String> dataMap) {
+        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+            if (entry.getValue().matches("-1")) {
+                throw new ExceptionFormat(entry.getKey());
+            }
         }
     }
 }

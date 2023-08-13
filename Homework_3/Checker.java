@@ -1,19 +1,17 @@
+package Homeworks.Homework_3;
 
-import java.util.Date;
 import java.util.Map;
 
 public abstract class Checker implements Check {
-    Date date;
     String data;
 
-    public Checker(Date date, String data) {
-        this.date = date;
+    public Checker(String data) {
         this.data = data;
     }
 
     @Override
-    public abstract void checkByNumber(String data) throws ExceptionNumber;
+    public abstract void checkByNumber(String data);
 
     @Override
-    public abstract void checkByFormat(Map<String, String> dataMap) throws ExceptionFormat;
+    public abstract void checkByFormat(Map<String, String> dataMap);
 }
